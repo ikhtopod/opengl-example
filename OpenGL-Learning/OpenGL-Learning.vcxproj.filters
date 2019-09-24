@@ -27,7 +27,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>stdafx</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\glad.c">
+    <ClCompile Include="..\ThirdParty\glad\gl_4_5_core\src\glad.c">
       <Filter>ThirdParty</Filter>
     </ClCompile>
   </ItemGroup>
