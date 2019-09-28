@@ -4,6 +4,21 @@
 #define DPRINTL(x) DPRINT(x) << std::endl
 
 
+void ShowOpenGLVersion_Example_1() {
+	DPRINTL(GLVersion.major);
+	DPRINTL(GLVersion.minor);
+}
+
+void ShowOpenGLVersion_Example_2() {
+	GLint versionMajor, versionMinor;
+
+	glGetIntegerv(GL_MAJOR_VERSION, &versionMajor);
+	glGetIntegerv(GL_MINOR_VERSION, &versionMinor);
+
+	DPRINTL(versionMajor);
+	DPRINTL(versionMinor);
+}
+
 
 struct ScreenSize {
 	GLsizei width = 0;
@@ -78,6 +93,34 @@ void Rendering() {
 /* End Rendering */
 
 
+/* Begin Shader */
+
+std::string vert { R"vs(#version 460 core
+
+layout (location = 0) in vec3 pos;
+
+void main(){
+	gl_Position = vec4(pos.x, pos.y, pos.z, 1.0f);
+}
+)vs" };
+
+std::string frag { R"fs(#version 460 core
+
+out vec4 FragColor;
+
+void main(){
+	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+}
+)fs" };
+
+/* End Shader */
+
+constexpr GLfloat UNIT = 1.0f;
+
+void NormalizeVerticesToUnit(std::vector<GLfloat>& v) {
+	std::transform(v.begin(), v.end(), v.begin(), [](GLfloat v) { return v * UNIT; });
+}
+
 int main() {
 	// init glfw
 	if (glfwInit() == GLFW_FALSE) {
@@ -108,21 +151,141 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	DPRINTL(GLVersion.major);
-	DPRINTL(GLVersion.minor);
+	ShowOpenGLVersion_Example_1();
+	ShowOpenGLVersion_Example_2();
 
 	// callbacks registration
 	glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
+
+
+	// VERTEX SHADER
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+
+	if (vertexShader == 0) {
+		std::cout << "Error: vertexShader == 0" << std::endl;
+		return 0;
+	}
+
+	const GLchar* vShaderSource = vert.c_str();
+	glShaderSource(vertexShader, 1, &vShaderSource, nullptr);
+	glCompileShader(vertexShader);
+
+	GLint successCompileVertex {};
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &successCompileVertex);
+
+	if (!successCompileVertex) {
+		GLint infoLogLength {};
+		glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+		if (infoLogLength > 0) {
+			GLchar* infoLog = new GLchar[infoLogLength];
+			glGetShaderInfoLog(vertexShader, infoLogLength, nullptr, infoLog);
+			std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+			delete[] infoLog;
+		}
+
+		glDeleteShader(vertexShader);
+		return 0;
+	}
+
+	// FRAGMENT SHADER
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+	if (fragmentShader == 0) {
+		std::cout << "Error: fragmentShader == 0" << std::endl;
+		return 0;
+	}
+
+	const GLchar* fShaderSource = frag.c_str();
+	glShaderSource(fragmentShader, 1, &fShaderSource, nullptr);
+	glCompileShader(fragmentShader);
+
+	GLint successCompileFragment {};
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &successCompileFragment);
+
+	if (!successCompileFragment) {
+		GLint infoLogLength {};
+		glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+		if (infoLogLength > 0) {
+			GLchar* infoLog = new GLchar[infoLogLength];
+			glGetShaderInfoLog(fragmentShader, infoLogLength, nullptr, infoLog);
+			std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+			delete[] infoLog;
+		}
+
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
+		return 0;
+	}
+
+	// SHADER PROGRAM
+	GLuint shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+
+	GLint successLinkProgram {};
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &successLinkProgram);
+
+	if (!successLinkProgram) {
+		GLint infoLogLength {};
+		glGetProgramiv(successLinkProgram, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+		if (infoLogLength > 0) {
+			GLchar* infoLog = new GLchar[infoLogLength];
+			glGetProgramInfoLog(shaderProgram, infoLogLength, nullptr, infoLog);
+			std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
+			delete[] infoLog;
+		}
+
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
+		glDeleteProgram(shaderProgram);
+		return 0;
+	}
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	// VERTICES
+	std::vector<GLfloat> vertices {
+		-0.5f, -0.5f, 0.0f,
+		 0.5f, -0.5f, 0.0f,
+		 0.0f,  0.5f, 0.0f
+	};
+	NormalizeVerticesToUnit(vertices);
+
+
+	GLuint vao, vbo;
+	glGenVertexArrays(1, &vao);
+	glGenBuffers(1, &vbo);
+
+
+	// INIT VERTEX CODE
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), &vertices[0], GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+	glEnableVertexAttribArray(0);
 
 	// mainloop
 	while (!glfwWindowShouldClose(window)) {
 		ProcessInput(window);
 
-		Rendering();
+		// Rendering();
+		ClearColor();
+
+		glUseProgram(shaderProgram);
+		glBindVertexArray(vao);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	glDeleteProgram(shaderProgram);
 
 	glfwTerminate();
 	return EXIT_SUCCESS;
