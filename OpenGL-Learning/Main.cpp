@@ -219,14 +219,23 @@ int main() {
 	GLint successCompileVertex {};
 	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &successCompileVertex);
 
-	if (!successCompileVertex) {
+	if (successCompileVertex == GL_FALSE) {
 		GLint infoLogLength {};
 		glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
 		if (infoLogLength > 0) {
 			GLchar* infoLog = new GLchar[infoLogLength];
-			glGetShaderInfoLog(vertexShader, infoLogLength, nullptr, infoLog);
+
+			/* 
+				written - целочисленная переменная, в которую
+				будет записано фактическое число символов
+				(без учета заключительного нулевого символа),
+				скопированных в буфер (infoLog).
+			*/
+			GLsizei written {}; 
+			glGetShaderInfoLog(vertexShader, infoLogLength, &written, infoLog);
 			std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+			
 			delete[] infoLog;
 		}
 
@@ -249,14 +258,17 @@ int main() {
 	GLint successCompileFragment {};
 	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &successCompileFragment);
 
-	if (!successCompileFragment) {
+	if (successCompileFragment == GL_FALSE) {
 		GLint infoLogLength {};
 		glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
 		if (infoLogLength > 0) {
 			GLchar* infoLog = new GLchar[infoLogLength];
-			glGetShaderInfoLog(fragmentShader, infoLogLength, nullptr, infoLog);
+
+			GLsizei written {};
+			glGetShaderInfoLog(fragmentShader, infoLogLength, &written, infoLog);
 			std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+
 			delete[] infoLog;
 		}
 
@@ -274,14 +286,17 @@ int main() {
 	GLint successLinkProgram {};
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &successLinkProgram);
 
-	if (!successLinkProgram) {
+	if (successLinkProgram == GL_FALSE) {
 		GLint infoLogLength {};
 		glGetProgramiv(successLinkProgram, GL_INFO_LOG_LENGTH, &infoLogLength);
 
 		if (infoLogLength > 0) {
 			GLchar* infoLog = new GLchar[infoLogLength];
-			glGetProgramInfoLog(shaderProgram, infoLogLength, nullptr, infoLog);
+
+			GLsizei written {};
+			glGetProgramInfoLog(shaderProgram, infoLogLength, &written, infoLog);
 			std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
+
 			delete[] infoLog;
 		}
 
