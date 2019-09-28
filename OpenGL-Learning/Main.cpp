@@ -19,6 +19,15 @@ void ShowOpenGLVersion_Example_2() {
 	DPRINTL(versionMinor);
 }
 
+void ShowOpenGLInfo() {
+	//ShowOpenGLVersion_Example_1();
+	ShowOpenGLVersion_Example_2();
+
+	std::cout << "GL_VENDOR: " << glGetString(GL_VENDOR) << std::endl;
+	std::cout << "GL_RENDERER: " << glGetString(GL_RENDERER) << std::endl;
+	std::cout << "GL_VERSION: " << glGetString(GL_VERSION) << std::endl;
+	std::cout << "GL_SHADING_LANGUAGE_VERSION: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+}
 
 struct ScreenSize {
 	GLsizei width = 0;
@@ -151,8 +160,7 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	ShowOpenGLVersion_Example_1();
-	ShowOpenGLVersion_Example_2();
+	ShowOpenGLInfo();
 
 	// callbacks registration
 	glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
@@ -299,7 +307,7 @@ int main() {
 		// glDrawArrays(GL_TRIANGLES, 0, 3);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0);
-		
+
 		glBindVertexArray(0); // unbind
 
 		glfwSwapBuffers(window);
