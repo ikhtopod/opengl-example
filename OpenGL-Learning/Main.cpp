@@ -99,24 +99,25 @@ void Rendering() {
 /* Begin Shader */
 
 std::string vert { R"vs(#version 460 core
+
 layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec3 aColor;
   
-out vec4 vertexColor;
+out vec3 ourColor;
 
 void main() {
     gl_Position = vec4(aPos, 1.0);
-    vertexColor = vec4(0.5, 0.0, 0.0, 1.0);
-}
+    ourColor = aColor;
+}    
 )vs" };
 
 std::string frag { R"fs(#version 460 core
 
-out vec4 FragColor;
+out vec4 FragColor;  
+in vec3 ourColor;
   
-uniform vec4 ourColor;
-
 void main() {
-    FragColor = ourColor;
+    FragColor = vec4(ourColor, 1.0);
 }
 )fs" };
 
@@ -165,10 +166,11 @@ int main() {
 
 	// VERTICES
 	std::vector<GLfloat> vertices {
-		 0.5f,  0.5f, 0.0f,  // top right
-		 0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  // bottom left
-		-0.5f,  0.5f, 0.0f,  // top left 
+		 0.5f,  0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
+		 // positions         // colors
+		 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
+		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
+		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,
 	};
 	NormalizeVerticesToUnit(vertices);
 
@@ -192,9 +194,15 @@ int main() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
 
-	// vertex positions
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+	// positions attribute
+	GLuint positionAttributeIndex = 0;
+	glEnableVertexAttribArray(positionAttributeIndex);
+	glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)0);
+
+	// color attribute
+	GLuint colorAttributeIndex = positionAttributeIndex + 1;
+	glEnableVertexAttribArray(colorAttributeIndex);
+	glVertexAttribPointer(colorAttributeIndex, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
 	// vertex normals
 	// glEnableVertexAttribArray(1);
