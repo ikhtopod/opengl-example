@@ -4,29 +4,23 @@
 #define DPRINTL(x) DPRINT(x) << std::endl
 
 
-void ShowOpenGLVersion_Example_1() {
-	DPRINTL(GLVersion.major);
-	DPRINTL(GLVersion.minor);
-}
+#define SHOW_INFO_STRING(type) std::cout << #type << ": " << glGetString(type) << std::endl
 
-void ShowOpenGLVersion_Example_2() {
-	GLint versionMajor, versionMinor;
-
-	glGetIntegerv(GL_MAJOR_VERSION, &versionMajor);
-	glGetIntegerv(GL_MINOR_VERSION, &versionMinor);
-
-	DPRINTL(versionMajor);
-	DPRINTL(versionMinor);
+#define SHOW_INFO_INT(type) { \
+	GLint x {}; \
+	glGetIntegerv(type, &x); \
+	std::cout << #type << ": " << x << std::endl; \
 }
 
 void ShowOpenGLInfo() {
-	//ShowOpenGLVersion_Example_1();
-	ShowOpenGLVersion_Example_2();
+	SHOW_INFO_INT(GL_MAJOR_VERSION);
+	SHOW_INFO_INT(GL_MINOR_VERSION);
 
-	std::cout << "GL_VENDOR: " << glGetString(GL_VENDOR) << std::endl;
-	std::cout << "GL_RENDERER: " << glGetString(GL_RENDERER) << std::endl;
-	std::cout << "GL_VERSION: " << glGetString(GL_VERSION) << std::endl;
-	std::cout << "GL_SHADING_LANGUAGE_VERSION: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+	SHOW_INFO_STRING(GL_VENDOR);
+	SHOW_INFO_STRING(GL_RENDERER);
+	SHOW_INFO_STRING(GL_VERSION);
+
+	SHOW_INFO_INT(GL_MAX_VERTEX_ATTRIBS);
 }
 
 struct ScreenSize {
@@ -226,16 +220,16 @@ int main() {
 		if (infoLogLength > 0) {
 			GLchar* infoLog = new GLchar[infoLogLength];
 
-			/* 
+			/*
 				written - целочисленная переменная, в которую
 				будет записано фактическое число символов
 				(без учета заключительного нулевого символа),
 				скопированных в буфер (infoLog).
 			*/
-			GLsizei written {}; 
+			GLsizei written {};
 			glGetShaderInfoLog(vertexShader, infoLogLength, &written, infoLog);
 			std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-			
+
 			delete[] infoLog;
 		}
 
