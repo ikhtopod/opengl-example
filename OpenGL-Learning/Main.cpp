@@ -99,20 +99,24 @@ void Rendering() {
 /* Begin Shader */
 
 std::string vert { R"vs(#version 460 core
+layout (location = 0) in vec3 aPos;
+  
+out vec4 vertexColor;
 
-layout (location = 0) in vec3 pos;
-
-void main(){
-	gl_Position = vec4(pos.x, pos.y, pos.z, 1.0f);
+void main() {
+    gl_Position = vec4(aPos, 1.0);
+    vertexColor = vec4(0.5, 0.0, 0.0, 1.0);
 }
 )vs" };
 
 std::string frag { R"fs(#version 460 core
 
 out vec4 FragColor;
+  
+uniform vec4 ourColor;
 
-void main(){
-	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+void main() {
+    FragColor = ourColor;
 }
 )fs" };
 
@@ -312,6 +316,12 @@ int main() {
 		ClearColor();
 
 		glUseProgram(shaderProgram);
+
+		float timeValue = glfwGetTime();
+		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
 		glBindVertexArray(vao);
 		// glDrawArrays(GL_TRIANGLES, 0, 3);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
