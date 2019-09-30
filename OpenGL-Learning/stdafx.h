@@ -3,11 +3,7 @@
 #ifndef STDAFX_H
 #define STDAFX_H
 
-#pragma warning(push)
-#pragma warning(disable:4098)
 #include "glad/glad.h"
-#pragma warning(pop)
-
 #include "GLFW/glfw3.h"
 
 #include <cstdlib>
