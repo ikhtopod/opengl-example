@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef APPLICATION_H
+#define APPLICATION_H
+
 class Application final {
 private:
 	static Application* m_instance;
@@ -20,3 +23,5 @@ public:
 	static Application* GetInstance();
 	void Run();
 };
+
+#endif // !APPLICATION_H
