@@ -23,43 +23,43 @@ void ShowOpenGLInfo() {
 	SHOW_INFO_INT(GL_MAX_VERTEX_ATTRIBS);
 }
 
-struct ScreenSize {
+struct ScreenSize_Example {
 	GLsizei width = 0;
 	GLsizei height = 0;
 };
 
-class Screen {
+class Screen_Example {
 public:
-	static ScreenSize size;
+	static ScreenSize_Example size;
 	static std::string title;
 };
 
-ScreenSize Screen::size { 800, 600 };
-std::string Screen::title { "OpenGL Window" };
+ScreenSize_Example Screen_Example::size { 800, 600 };
+std::string Screen_Example::title { "OpenGL Window" };
 
 
 
-struct Version {
+struct Version_Example {
 	int major = 0;
 	int minor = 0;
 };
 
-class OpenGL {
+class OpenGL_Example {
 public:
-	static Version version;
+	static Version_Example version;
 };
 
-Version OpenGL::version { 4, 6 };
+Version_Example OpenGL_Example::version { 4, 6 };
 
 
 /* Begin GLFW Callbacks */
 
 // Viewport size
 void FramebufferSizeCallback(GLFWwindow* window, int width, int height) {
-	Screen::size.width = width;
-	Screen::size.height = height;
+	Screen_Example::size.width = width;
+	Screen_Example::size.height = height;
 
-	glViewport(0, 0, Screen::size.width, Screen::size.height);
+	glViewport(0, 0, Screen_Example::size.width, Screen_Example::size.height);
 }
 
 /* End GLFW Callbacks */
@@ -136,14 +136,14 @@ int _main() {
 		return EXIT_FAILURE;
 	}
 
-	// OpenGL settings for glfw
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OpenGL::version.major);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OpenGL::version.minor);
+	// OpenGL_Example settings for glfw
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OpenGL_Example::version.major);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OpenGL_Example::version.minor);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	// glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // for macOS
 
 	// create window object
-	GLFWwindow* window = glfwCreateWindow(Screen::size.width, Screen::size.height, Screen::title.c_str(), nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(Screen_Example::size.width, Screen_Example::size.height, Screen_Example::title.c_str(), nullptr, nullptr);
 	if (window == nullptr) {
 		std::cerr << "Failed to create glfw window" << std::endl;
 		glfwTerminate();

@@ -4,7 +4,9 @@
 #define APPLICATION_H
 
 #include "Triada.h"
+#include "ScreenSize.h"
 #include "Window.h"
+#include "Input.h"
 
 class Application final : public Triada {
 private:
@@ -15,10 +17,10 @@ private:
 	Input m_input;
 
 private:
-	inline static void InitInstance(Application* _this);
+	Application();
 
 private:
-	Application();
+	void MainLoop();
 
 public:
 	~Application() = default;
@@ -30,7 +32,8 @@ public:
 	static Application* GetInstance();
 	void Run();
 
-	void MainLoop();
+public:
+	Window& GetWindow();
 
 public: // Triada
 	virtual void Init() override;

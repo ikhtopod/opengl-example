@@ -1,16 +1,12 @@
 #include "stdafx.h"
 #include "Application.h"
 
-Application* Application::m_instance {};
+Application* Application::m_instance = nullptr;
 
-void Application::InitInstance(Application* _this) {
+Application::Application() : m_window(ScreenSize { 800, 600 }, "3D Example"), m_input() {
 	if (Application::m_instance == nullptr) {
-		Application::m_instance = _this;
+		Application::m_instance = this;
 	}
-}
-
-Application::Application() {
-	InitInstance(this);
 }
 
 Application* Application::GetInstance() {
@@ -25,6 +21,10 @@ void Application::Run() {
 	} catch (...) {
 
 	}
+}
+
+Window& Application::GetWindow() {
+	return m_window;
 }
 
 void Application::Init() {
