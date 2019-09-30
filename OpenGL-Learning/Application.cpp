@@ -20,5 +20,17 @@ Application* Application::GetInstance() {
 }
 
 void Application::Run() {
-	std::cout << "Application is running" << std::endl;
+	try {
+		Init();
+		Draw();
+		Free();
+	} catch (...) {
+
+	}
 }
+
+void Application::Init() {}
+
+void Application::Draw() {}
+
+void Application::Free() {}

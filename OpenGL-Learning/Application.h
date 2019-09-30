@@ -3,7 +3,9 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-class Application final {
+#include "Triada.h"
+
+class Application final : public Triada {
 private:
 	static Application* m_instance;
 
@@ -22,6 +24,11 @@ public:
 
 	static Application* GetInstance();
 	void Run();
+
+public: // Triada
+	virtual void Init() override;
+	virtual void Draw() override;
+	virtual void Free() override;
 };
 
 #endif // !APPLICATION_H
