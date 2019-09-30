@@ -196,13 +196,13 @@ int main() {
 
 	// positions attribute
 	GLuint positionAttributeIndex = 0;
-	glEnableVertexAttribArray(positionAttributeIndex);
 	glVertexAttribPointer(positionAttributeIndex, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)0);
+	glEnableVertexAttribArray(positionAttributeIndex);
 
 	// color attribute
 	GLuint colorAttributeIndex = positionAttributeIndex + 1;
-	glEnableVertexAttribArray(colorAttributeIndex);
 	glVertexAttribPointer(colorAttributeIndex, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(colorAttributeIndex);
 
 	// vertex normals
 	// glEnableVertexAttribArray(1);
@@ -325,7 +325,7 @@ int main() {
 
 		glUseProgram(shaderProgram);
 
-		float timeValue = glfwGetTime();
+		float timeValue = static_cast<float>(glfwGetTime());
 		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
 		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
 		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
