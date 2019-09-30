@@ -160,6 +160,7 @@
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </DisableSpecificWarnings>
     </ClCompile>
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </DisableSpecificWarnings>
@@ -175,11 +176,14 @@
       </ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Triada.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Triada.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

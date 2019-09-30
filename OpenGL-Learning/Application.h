@@ -4,10 +4,15 @@
 #define APPLICATION_H
 
 #include "Triada.h"
+#include "Window.h"
 
 class Application final : public Triada {
 private:
 	static Application* m_instance;
+
+private:
+	Window m_window;
+	Input m_input;
 
 private:
 	inline static void InitInstance(Application* _this);
@@ -24,6 +29,8 @@ public:
 
 	static Application* GetInstance();
 	void Run();
+
+	void MainLoop();
 
 public: // Triada
 	virtual void Init() override;
