@@ -1,5 +1,13 @@
 #include "stdafx.h"
 
-int main() {
+#include "Application.h"
+
+int main(int argc, char** argv) {
+	try {
+		Application::GetInstance()->Run();
+	} catch (...) {
+		return EXIT_FAILURE;
+	}
+
 	return EXIT_SUCCESS;
 }
