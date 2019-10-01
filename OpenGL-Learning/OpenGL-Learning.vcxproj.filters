@@ -30,10 +30,16 @@
     <ClCompile Include="..\ThirdParty\glad\gl_4_6_core\src\glad.c">
       <Filter>ThirdParty</Filter>
     </ClCompile>
+    <ClCompile Include="Chatter.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>stdafx</Filter>
+    </ClInclude>
+    <ClInclude Include="Chatter.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
