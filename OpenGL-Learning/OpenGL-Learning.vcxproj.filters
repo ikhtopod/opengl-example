@@ -19,6 +19,9 @@
     <Filter Include="stdafx">
       <UniqueIdentifier>{f0ebeabe-d9ed-4e71-8e51-55105e9f8a9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\examples">
+      <UniqueIdentifier>{1b54e814-023c-4c4a-9c22-65bf8f925c6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -32,6 +35,9 @@
     </ClCompile>
     <ClCompile Include="Chatter.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="glfw_window_example.cpp">
+      <Filter>Исходные файлы\examples</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
