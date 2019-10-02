@@ -28,7 +28,7 @@ public:
 	template <typename T, typename... Args>
 	static void Stink(T val, Args... args) {
 		std::cerr << "Error: ";
-		Chatter::Say(args...);
+		Chatter::Say(val, args...);
 	}
 };
 
