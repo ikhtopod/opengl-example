@@ -154,7 +154,10 @@
       </DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="Chatter.cpp" />
-    <ClCompile Include="glfw_window_example.cpp" />
+    <ClCompile Include="glfw_window_example.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Main.cpp">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </DisableSpecificWarnings>

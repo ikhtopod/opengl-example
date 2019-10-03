@@ -18,7 +18,7 @@ void ProcessInput(GLFWwindow* winContext) {
 	PressedEscapeForCloseWindow(winContext);
 }
 
-int glfw_window_example__main() {
+int main() {
 	if (glfwInit() == GLFW_FALSE) {
 		Chatter::Stink("GLFW not Init");
 		return EXIT_FAILURE;
