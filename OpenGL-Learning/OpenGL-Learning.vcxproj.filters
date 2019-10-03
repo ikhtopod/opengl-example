@@ -39,6 +39,9 @@
     <ClCompile Include="glfw_window_example.cpp">
       <Filter>Исходные файлы\examples</Filter>
     </ClCompile>
+    <ClCompile Include="triangle_simple_example.cpp">
+      <Filter>Исходные файлы\examples</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
