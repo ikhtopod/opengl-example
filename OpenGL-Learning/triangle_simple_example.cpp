@@ -33,6 +33,19 @@ int g_vSync = 60;
 
 #pragma endregion
 
+#pragma region Callbacks
+
+void InitCallbacks(GLFWwindow* winContext) {
+	glfwSetFramebufferSizeCallback(winContext, [](GLFWwindow* c, int w, int h) {
+		Chatter::Say("width: ", w, "; height: ", h);
+		g_screenSize.width = w;
+		g_screenSize.height = h;
+		glViewport(0, 0, w, h);
+	});
+}
+
+#pragma endregion
+
 #pragma region Input
 
 void PressedEscapeForCloseWindow(GLFWwindow* winContext) {
@@ -358,36 +371,40 @@ public: // IRendering
 	}
 };
 
-Mesh g_triangleMesh {};
+class Renderer final {
+private:
+	Mesh m_triangleMesh {};
 
-void InitRendering(GLFWwindow* winContext) {
-	g_triangleMesh.SetVertices(
-		{
-			 0.5f,  0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			-0.5f, -0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f,
-		}
-	);
+public:
+	Renderer() {
+		m_triangleMesh.SetVertices(
+			{
+				 0.5f,  0.5f, 0.0f,
+				 0.5f, -0.5f, 0.0f,
+				-0.5f, -0.5f, 0.0f,
+				-0.5f,  0.5f, 0.0f,
+			}
+		);
 
-	g_triangleMesh.SetIndices(
-		{
-			0, 1, 3,
-			1, 2, 3,
-		}
-	);
+		m_triangleMesh.SetIndices(
+			{
+				0, 1, 3,
+				1, 2, 3,
+			}
+		);
 
-	g_triangleMesh.Init();
-}
+		m_triangleMesh.Init();
+	}
 
-void DrawRendering(GLFWwindow* winContext) {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	g_triangleMesh.Draw();
-}
+	~Renderer() {
+		m_triangleMesh.Free();
+	}
 
-void FreeRendering(GLFWwindow* winContext) {
-	g_triangleMesh.Free();
-}
+	void Draw() {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		m_triangleMesh.Draw();
+	}
+};
 
 #pragma endregion
 
@@ -412,13 +429,7 @@ int main() {
 	}
 
 	glfwMakeContextCurrent(winContext);
-
-	glfwSetFramebufferSizeCallback(winContext, [](GLFWwindow* c, int w, int h) {
-		Chatter::Say("width: ", w, "; height: ", h);
-		g_screenSize.width = w;
-		g_screenSize.height = h;
-		glViewport(0, 0, w, h);
-	});
+	InitCallbacks(winContext);
 
 	if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
 		Chatter::Stink("OpenGl not loaded");
@@ -430,20 +441,17 @@ int main() {
 	glfwSetInputMode(winContext, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 	InitOpenGL();
-	InitRendering(winContext);
 
-	while (!glfwWindowShouldClose(winContext)) {
+	for (Renderer renderer {}; !glfwWindowShouldClose(winContext); ) {
 		glfwSetWindowTitle(winContext, (g_title + " | time: " + std::to_string(glfwGetTime())).c_str());
 
 		ProcessInput(winContext);
 
-		DrawRendering(winContext);
+		renderer.Draw();
 
 		glfwSwapBuffers(winContext);
 		glfwPollEvents();
 	}
-
-	FreeRendering(winContext);
 
 	glfwTerminate();
 	return EXIT_SUCCESS;
