@@ -327,8 +327,8 @@ public: // IRendering
 			GL_STATIC_DRAW);
 
 		/* layouts */
-		glVertexAttribPointer(Mesh::AttribIndex::POSITION, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), reinterpret_cast<void*>(0));
 		glEnableVertexAttribArray(Mesh::AttribIndex::POSITION);
+		glVertexAttribPointer(Mesh::AttribIndex::POSITION, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), reinterpret_cast<void*>(0));
 
 		/* vertex normals example
 		glEnableVertexAttribArray(MeshBase::AttribIndex::NORMAL);
