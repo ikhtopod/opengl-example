@@ -240,6 +240,9 @@ public:	// IRendering
 		InitVertex();
 		InitFragment();
 		InitProgram();
+
+		glDeleteShader(m_vertex);
+		glDeleteShader(m_fragment);
 	}
 
 	virtual void Draw() override {
@@ -249,8 +252,6 @@ public:	// IRendering
 	}
 
 	virtual void Free() override {
-		glDeleteShader(m_vertex);
-		glDeleteShader(m_fragment);
 		glDeleteProgram(m_program);
 	}
 };
