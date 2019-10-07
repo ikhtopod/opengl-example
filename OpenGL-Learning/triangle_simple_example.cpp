@@ -238,10 +238,14 @@ protected:
 protected:
 	void UniformDemo() {
 		static const GLchar* u_color { "u_color" };
+		static const GLchar* u_time { "u_time" };
 
 		GLint u_colorLocation = glGetUniformLocation(m_program, u_color);
+		GLint u_timeLocation = glGetUniformLocation(m_program, u_time);
 		GLfloat vec[] { .23f, .57f, .2f, 1.0f };
+		GLfloat time = static_cast<GLfloat>(glfwGetTime());
 
+		glUniform1f(u_timeLocation, time);
 		glUniform4fv(u_colorLocation, 1, &vec[0]);
 	}
 
@@ -280,12 +284,13 @@ void main() {
 const GLchar* Shader::DEFAULT_FRAGMENT_SOURCE {
 R"fs(#version 460 core
 
+uniform float u_time;
 uniform vec4 u_color;
 
-out vec4 FragColor;
+//out vec4 FragColor;
 
 void main() {
-	FragColor = u_color;
+	gl_FragColor = u_color * abs(sin(u_time)); // wave color
 }
 )fs"
 };
