@@ -280,10 +280,12 @@ void main() {
 const GLchar* Shader::DEFAULT_FRAGMENT_SOURCE {
 R"fs(#version 460 core
 
+uniform vec4 u_color;
+
 out vec4 FragColor;
 
 void main() {
-	FragColor = vec4(.23f, .57f, .2f, 1.0f);
+	FragColor = u_color;
 }
 )fs"
 };
