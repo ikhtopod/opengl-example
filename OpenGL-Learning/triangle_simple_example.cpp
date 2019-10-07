@@ -235,6 +235,16 @@ protected:
 		ProgramErrorHandle();
 	}
 
+protected:
+	void UniformDemo() {
+		static const GLchar* u_color { "u_color" };
+
+		GLint u_colorLocation = glGetUniformLocation(m_program, u_color);
+		GLfloat vec[] { .23f, .57f, .2f, 1.0f };
+
+		glUniform4fv(u_colorLocation, 1, &vec[0]);
+	}
+
 public:	// IRendering
 	virtual void Init() override {
 		InitVertex();
@@ -248,7 +258,7 @@ public:	// IRendering
 	virtual void Draw() override {
 		glUseProgram(m_program);
 
-		/* uniform */
+		UniformDemo();
 	}
 
 	virtual void Free() override {
