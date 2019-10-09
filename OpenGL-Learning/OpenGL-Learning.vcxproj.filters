@@ -42,12 +42,18 @@
     <ClCompile Include="triangle_simple_example.cpp">
       <Filter>Исходные файлы\examples</Filter>
     </ClCompile>
+    <ClCompile Include="IRendering.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>stdafx</Filter>
     </ClInclude>
     <ClInclude Include="Chatter.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="IRendering.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
