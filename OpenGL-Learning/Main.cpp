@@ -98,6 +98,15 @@ public:
 			}
 		);
 
+		m_triangleMesh.GetShader().GetTexture().SetCoords(
+			{
+				1.0f, 1.0f,
+				1.0f, 0.0f,
+				0.0f, 0.0f,
+				0.0f, 1.0f,
+			}
+		);
+
 		m_triangleMesh.SetIndices(
 			{
 				0, 1, 3,

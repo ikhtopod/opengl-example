@@ -5,6 +5,7 @@
 
 #include "IRendering.h"
 #include "Chatter.h"
+#include "Texture.h"
 
 class Shader : virtual public IRendering {
 protected:
@@ -16,6 +17,8 @@ protected:
 	// GLuint m_geometry {};
 	GLuint m_fragment {};
 	GLuint m_program {};
+
+	Texture m_texture {};
 
 private: // Error Handle
 	void VertexErrorHandle();
@@ -29,6 +32,9 @@ protected:
 
 protected:
 	void UniformDemo();
+
+public:
+	Texture& GetTexture();
 
 public:	// IRendering
 	virtual void Init() override;

@@ -14,6 +14,9 @@ void Mesh::SetVertices(const std::vector<GLfloat>& vertices) {
 void Mesh::SetIndices(const std::vector<GLuint>& indices) {
 	JustUtility::CopyVector<GLuint>(indices, m_indices);
 }
+
+Shader& Mesh::GetShader() {
+	return m_shader;
 }
 
 /* IRendering */
@@ -46,9 +49,9 @@ void Mesh::Init() {
 	glVertexAttribPointer(MeshBase::AttribIndex::NORMAL, 3, GL_FLOAT, GL_FALSE,
 		sizeof(Vertex), (void*)offsetof(Vertex, normal)); */
 
-	Mesh::Unbind();
-
 	m_shader.Init();
+
+	Mesh::Unbind();
 }
 
 void Mesh::Draw() {

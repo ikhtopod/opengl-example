@@ -5,10 +5,14 @@
 const GLchar* Shader::DEFAULT_VERTEX_SOURCE {
 R"vs(#version 460 core
 
-layout (location = 0) in vec3 m_vertices;
+layout (location = 0) in vec3 a_position;
+layout (location = 1) in vec2 a_texture;
+
+out vec2 TexCoord;
 
 void main() {
-	gl_Position = vec4(m_vertices, 1.0);
+	gl_Position = vec4(a_position, 1.0);
+	TexCoord = a_texture;
 }
 )vs"
 };
@@ -19,10 +23,12 @@ R"fs(#version 460 core
 uniform float u_time;
 uniform vec4 u_color;
 
-//out vec4 FragColor;
+in vec2 TexCoord;
+
+uniform sampler2D u_texture;
 
 void main() {
-	gl_FragColor = u_color * abs(sin(u_time)); // wave color
+	gl_FragColor = texture(u_texture, TexCoord);
 }
 )fs"
 };
@@ -164,9 +170,15 @@ void Shader::UniformDemo() {
 	glUniform4fv(u_colorLocation, 1, &vec[0]);
 }
 
+Texture& Shader::GetTexture() {
+	return m_texture;
+}
+
 /* IRendering */
 
 void Shader::Init() {
+	m_texture.Init();
+
 	InitVertex();
 	InitFragment();
 	InitProgram();
@@ -176,11 +188,15 @@ void Shader::Init() {
 }
 
 void Shader::Draw() {
+	m_texture.Draw();
+
 	glUseProgram(m_program);
 
 	UniformDemo();
 }
 
 void Shader::Free() {
+	m_texture.Free();
+
 	glDeleteProgram(m_program);
 }

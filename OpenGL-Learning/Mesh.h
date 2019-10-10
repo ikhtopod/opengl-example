@@ -29,6 +29,8 @@ public:
 	void SetVertices(const std::vector<GLfloat>& vertices);
 	void SetIndices(const std::vector<GLuint>& indices);
 
+	Shader& GetShader();
+
 public: // IRendering
 	virtual void Init() override;
 	virtual void Draw() override;
