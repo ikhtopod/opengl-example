@@ -24,7 +24,7 @@ struct Color {
 
 namespace {
 
-ScreenSize g_screenSize { 800, 600 };
+ScreenSize g_screenSize { 768, 768 };
 std::string g_title { "Just Title | Boo!" };
 Color g_clearColor { .3f, .3f, .3f, 1.0f };
 int g_isVSync = GLFW_TRUE;
