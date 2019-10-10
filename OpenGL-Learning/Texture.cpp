@@ -41,17 +41,30 @@ void Texture::Init() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// load image
-	stbi_set_flip_vertically_on_load(m_stb_flipVertical);
+	const int FLIP_VERTICAL = 1;
+	stbi_set_flip_vertically_on_load(FLIP_VERTICAL);
+
+	int width = 0;
+	int height = 0;
+	int nrChannels = 0;
+	TextureComponent componentsPerPixel { TextureComponent::RGBA };
 
 	uint8_t* data = stbi_load(DEFAULT_IMAGE_PATH.c_str(),
-		&m_stb_width, &m_stb_height, &m_stb_nrChannels,
-		static_cast<int>(m_stb_componentsPerPixel));
+		&width, &height, &nrChannels,
+		static_cast<int>(componentsPerPixel));
 
 	if (data) {
 		// use image
-		glTexImage2D(GL_TEXTURE_2D,
-			0, GL_RGBA, m_stb_width, m_stb_height,
-			0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		const GLsizei LEVELS = 1;
+		glTexStorage2D(GL_TEXTURE_2D, LEVELS, GL_RGBA8, width, height);
+
+		const GLint LEVEL = 0;
+		const GLint XOFFSET = 0;
+		const GLint YOFFSET = 0;
+		glTexSubImage2D(GL_TEXTURE_2D, LEVEL,
+			XOFFSET, YOFFSET, width, height,
+			GL_RGBA, GL_UNSIGNED_BYTE, data);
+
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		stbi_image_free(data);

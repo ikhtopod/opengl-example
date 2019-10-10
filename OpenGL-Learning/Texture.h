@@ -24,14 +24,6 @@ private:
 	GLuint vbo {};
 	GLuint tex1 {};
 
-	int m_stb_width = 0;
-	int m_stb_height = 0;
-	int m_stb_nrChannels = 0;
-
-	bool m_stb_flipVertical = true;
-
-	TextureComponent m_stb_componentsPerPixel = TextureComponent::RGBA;
-
 private:
 	static void Unbind();
 
