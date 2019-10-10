@@ -25,10 +25,10 @@ uniform vec4 u_color;
 
 in vec2 TexCoord;
 
-uniform sampler2D u_texture;
+uniform sampler2D u_texture1;
 
 void main() {
-	gl_FragColor = texture(u_texture, TexCoord);
+	gl_FragColor = texture(u_texture1, TexCoord);
 }
 )fs"
 };
@@ -168,6 +168,11 @@ void Shader::UniformDemo() {
 
 	glUniform1f(u_timeLocation, time);
 	glUniform4fv(u_colorLocation, 1, &vec[0]);
+
+	glUseProgram(m_program);
+
+	glUniform1i(glGetUniformLocation(m_program, "u_texture1"), 0);
+	// glUniform1i(glGetUniformLocation(m_program, "u_texture2"), 1);
 }
 
 Texture& Shader::GetTexture() {
