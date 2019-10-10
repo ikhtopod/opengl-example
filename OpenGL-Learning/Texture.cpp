@@ -65,7 +65,7 @@ void Texture::Init() {
 }
 
 void Texture::Draw() {
-	glActiveTexture(tex1);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, tex1);
 }
 
