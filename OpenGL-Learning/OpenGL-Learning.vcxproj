@@ -159,6 +159,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="IRendering.cpp" />
+    <ClCompile Include="JustUtility.cpp" />
     <ClCompile Include="Main.cpp">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </DisableSpecificWarnings>
@@ -183,6 +184,7 @@
   <ItemGroup>
     <ClInclude Include="Chatter.h" />
     <ClInclude Include="IRendering.h" />
+    <ClInclude Include="JustUtility.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stdafx.h" />

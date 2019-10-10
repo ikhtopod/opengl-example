@@ -8,11 +8,12 @@ void Mesh::Unbind() {
 }
 
 void Mesh::SetVertices(const std::vector<GLfloat>& vertices) {
-	Mesh::SetVector<GLfloat>(vertices, m_vertices);
+	JustUtility::CopyVector<GLfloat>(vertices, m_vertices);
 }
 
 void Mesh::SetIndices(const std::vector<GLuint>& indices) {
-	Mesh::SetVector<GLuint>(indices, m_indices);
+	JustUtility::CopyVector<GLuint>(indices, m_indices);
+}
 }
 
 /* IRendering */
@@ -37,8 +38,8 @@ void Mesh::Init() {
 		GL_STATIC_DRAW);
 
 	/* layouts */
-	glEnableVertexAttribArray(Mesh::AttribIndex::POSITION);
-	glVertexAttribPointer(Mesh::AttribIndex::POSITION, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), reinterpret_cast<void*>(0));
+	glEnableVertexAttribArray(JustUtility::AttribIndex::POSITION);
+	glVertexAttribPointer(JustUtility::AttribIndex::POSITION, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), reinterpret_cast<void*>(0));
 
 	/* vertex normals example
 	glEnableVertexAttribArray(MeshBase::AttribIndex::NORMAL);

@@ -10,13 +10,6 @@ class Mesh : virtual public IRendering {
 protected:
 	static const GLsizei DEFAULT_BUFFER_SIZE;
 
-	enum AttribIndex : GLuint {
-		POSITION,
-		// COLOR,
-		NORMAL,
-		TEXTURE,
-	};
-
 protected:
 	GLenum m_mode = GL_TRIANGLES;
 
@@ -30,13 +23,6 @@ protected:
 	Shader m_shader {};
 
 protected:
-	template <typename T>
-	static void SetVector(const std::vector<T>& from, std::vector<T>& to) {
-		to.clear();
-		to.resize(from.size());
-		std::copy(from.cbegin(), from.cend(), to.begin());
-	}
-
 	static void Unbind();
 
 public:
