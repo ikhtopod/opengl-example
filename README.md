@@ -1,2 +1,2 @@
-# opengl-learning
-OpenGL Learning
+# opengl-example
+OpenGL Example
