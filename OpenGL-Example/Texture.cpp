@@ -5,7 +5,7 @@
 #define STBI_ONLY_PNG
 #include "stb_image.h"
 
-const std::string Texture::DEFAULT_IMAGE_PATH { R"(..\Images\InsolentEngine.png)" };
+const std::string Texture::DEFAULT_IMAGE_PATH { R"(..\Images\Icon.png)" };
 
 void Texture::Unbind() {
 	glBindTexture(GL_TEXTURE_2D, 0);
