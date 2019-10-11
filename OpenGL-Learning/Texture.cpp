@@ -69,9 +69,8 @@ void Texture::Init() {
 
 		stbi_image_free(data);
 	} else {
-		const char* message { "Failed to load texture" };
-		Chatter::Stink(message);
-		throw std::exception { message };
+		Chatter::Stink("Failed to load texture");
+		throw std::exception { Chatter::c_LastStink() };
 	}
 
 	Unbind();

@@ -61,7 +61,7 @@ void Shader::VertexErrorHandle() {
 		glDeleteShader(m_vertex);
 
 		Chatter::Stink("Cannot compile vertex shader");
-		std::exit(EXIT_FAILURE);
+		throw std::exception { Chatter::c_LastStink() };
 	}
 }
 
@@ -87,7 +87,7 @@ void Shader::FragmentErrorHandle() {
 		glDeleteShader(m_fragment);
 
 		Chatter::Stink("Cannot compile fragment shader");
-		std::exit(EXIT_FAILURE);
+		throw std::exception { Chatter::c_LastStink() };
 	}
 }
 
@@ -114,7 +114,7 @@ void Shader::ProgramErrorHandle() {
 		glDeleteProgram(m_program);
 
 		Chatter::Stink("Cannot link program");
-		std::exit(EXIT_FAILURE);
+		throw std::exception { Chatter::c_LastStink() };
 	}
 }
 
@@ -123,7 +123,7 @@ void Shader::InitVertex() {
 
 	if (!m_vertex) {
 		Chatter::Stink("Cannot create vertex shader");
-		std::exit(EXIT_FAILURE);
+		throw std::exception { Chatter::c_LastStink() };
 	}
 
 	glShaderSource(m_vertex, 1, &Shader::DEFAULT_VERTEX_SOURCE, nullptr);
@@ -137,7 +137,7 @@ void Shader::InitFragment() {
 
 	if (!m_fragment) {
 		Chatter::Stink("Cannot create fragment shader");
-		std::exit(EXIT_FAILURE);
+		throw std::exception { Chatter::c_LastStink() };
 	}
 
 	glShaderSource(m_fragment, 1, &Shader::DEFAULT_FRAGMENT_SOURCE, nullptr);
