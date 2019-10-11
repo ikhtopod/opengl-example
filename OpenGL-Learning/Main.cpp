@@ -1,48 +1,18 @@
 #include "stdafx.h"
 
 #include "Chatter.h"
-
+#include "Window.h"
 #include "Mesh.h"
-
-#pragma region Structures
-
-struct ScreenSize {
-	int width = 0;
-	int height = 0;
-};
-
-struct Color {
-	GLfloat r = 0.0f;
-	GLfloat g = 0.0f;
-	GLfloat b = 0.0f;
-	GLfloat a = 1.0f;
-};
-
-#pragma endregion
 
 #pragma region Global
 
 namespace {
 
-ScreenSize g_screenSize { 768, 768 };
-std::string g_title { "Just Title | Boo!" };
+using namespace JustUtility;
+
 Color g_clearColor { .3f, .3f, .3f, 1.0f };
-int g_isVSync = GLFW_TRUE;
-int g_vSync = 60;
+Window g_window {};
 
-}
-
-#pragma endregion
-
-#pragma region Callbacks
-
-void InitCallbacks(GLFWwindow* winContext) {
-	glfwSetFramebufferSizeCallback(winContext, [](GLFWwindow* c, int w, int h) {
-		Chatter::Say("width: ", w, "; height: ", h);
-		g_screenSize.width = w;
-		g_screenSize.height = h;
-		glViewport(0, 0, w, h);
-	});
 }
 
 #pragma endregion
@@ -62,7 +32,15 @@ void ProcessInput(GLFWwindow* winContext) {
 
 #pragma endregion
 
-#pragma region Init OpenGL
+#pragma region OpenGL
+
+void LoadOpenGL() {
+	if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
+		Chatter::Stink("OpenGL not loaded");
+		glfwTerminate();
+		throw std::exception { Chatter::c_LastStink() };
+	}
+}
 
 void InitOpenGL() {
 	glEnable(GL_MULTISAMPLE);
@@ -76,7 +54,7 @@ void InitOpenGL() {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glClearColor(g_clearColor.r, g_clearColor.g, g_clearColor.b, g_clearColor.a);
-	glViewport(0, 0, g_screenSize.width, g_screenSize.height);
+	glViewport(0, 0, g_window.GetScreenSize().width, g_window.GetScreenSize().height);
 }
 
 #pragma endregion
@@ -132,49 +110,18 @@ public:
 #pragma region Main
 
 int main() {
-	if (glfwInit() == GLFW_FALSE) {
-		Chatter::Stink("GLFW not Init");
-		return EXIT_FAILURE;
-	}
+	g_window.Init();
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_SAMPLES, 4); // MSAA
-
-	GLFWwindow* winContext = glfwCreateWindow(g_screenSize.width, g_screenSize.height, g_title.c_str(), nullptr, nullptr);
-	if (winContext == nullptr) {
-		Chatter::Stink("Window not created");
-		glfwTerminate();
-		return EXIT_FAILURE;
-	}
-
-	glfwMakeContextCurrent(winContext);
-	InitCallbacks(winContext);
-
-	if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
-		Chatter::Stink("OpenGl not loaded");
-		glfwTerminate();
-		return EXIT_FAILURE;
-	}
-
-	glfwSwapInterval(g_isVSync);
-	glfwSetInputMode(winContext, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-
+	LoadOpenGL();
 	InitOpenGL();
 
-	for (Renderer renderer {}; !glfwWindowShouldClose(winContext); ) {
-		glfwSetWindowTitle(winContext, (g_title + " | time: " + std::to_string(glfwGetTime())).c_str());
-
-		ProcessInput(winContext);
-
+	for (Renderer renderer {}; !glfwWindowShouldClose(g_window.GetContext()); ) {
+		g_window.Draw();
+		ProcessInput(g_window.GetContext());
 		renderer.Draw();
-
-		glfwSwapBuffers(winContext);
-		glfwPollEvents();
 	}
 
-	glfwTerminate();
+	g_window.Free();
 	return EXIT_SUCCESS;
 }
 
