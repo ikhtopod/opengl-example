@@ -79,7 +79,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ObjectFileName>$(IntDir)\$(ProjectName)\$(ConfigurationName)\%(RelativeDir)</ObjectFileName>
-      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdParty\glad\gl_4_6_core\include;$(SolutionDir)\ThirdParty\glfw\glfw-3.3.bin.WIN32\include;$(SolutionDir)\ThirdParty\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\ThirdParty\glad\gl_4_6_core\include;$(SolutionDir)\ThirdParty\glfw\glfw-3.3.bin.WIN32\include;$(SolutionDir)\ThirdParty\stb;$(SolutionDir)\ThirdParty\glm\glm-0.9.9.6;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
