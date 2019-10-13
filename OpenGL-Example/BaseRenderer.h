@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef RENDERER_H
-#define RENDERER_H
+#ifndef BASERENDERER_H
+#define BASERENDERER_H
 
 class BaseRenderer {
 public:
 	virtual void Draw() = 0;
 };
 
-#endif // !RENDERER_H
+#endif // !BASERENDERER_H
