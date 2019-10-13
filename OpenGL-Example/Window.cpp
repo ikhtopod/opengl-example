@@ -37,17 +37,15 @@ void Window::InitCallbacks() const {
 
 void Window::Init() {
 	if (glfwInit() == GLFW_FALSE) {
-		Chatter::Stink("GLFW not Init");
-		throw std::exception { Chatter::c_LastStink() };
+		throw std::exception { "GLFW not Init" };
 	}
 
 	Window::InitWindowHints();
 
 	m_context = glfwCreateWindow(m_screenSize.width, m_screenSize.height, m_title.c_str(), nullptr, nullptr);
 	if (m_context == nullptr) {
-		Chatter::Stink("GLFW not Init");
 		glfwTerminate();
-		throw std::exception { Chatter::c_LastStink() };
+		throw std::exception { "GLFW not Init" };
 	}
 
 	glfwMakeContextCurrent(m_context);

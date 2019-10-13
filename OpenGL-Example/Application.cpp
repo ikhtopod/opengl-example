@@ -10,9 +10,8 @@ void Application::Run() {
 
 void Application::LoadOpenGL() {
 	if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
-		Chatter::Stink("OpenGL not loaded");
 		glfwTerminate();
-		throw std::exception { Chatter::c_LastStink() };
+		throw std::exception { "OpenGL not loaded" };
 	}
 }
 
