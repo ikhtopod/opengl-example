@@ -8,10 +8,14 @@ R"vs(#version 460 core
 layout (location = 0) in vec3 a_position;
 layout (location = 1) in vec2 a_texture;
 
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
 out vec2 TexCoord;
 
 void main() {
-	gl_Position = vec4(a_position, 1.0);
+	gl_Position = projection * view * model * vec4(a_position, 1.0);
 	TexCoord = a_texture;
 }
 )vs"
@@ -168,6 +172,27 @@ void Shader::UniformDemo() {
 
 	glUniform1f(u_timeLocation, time);
 	glUniform4fv(u_colorLocation, 1, &vec[0]);
+
+	// model view projection example
+	glm::mat4 model { 1.0f };
+	glm::mat4 view { 1.0f };
+	glm::mat4 projection { 1.0f };
+
+	GLfloat degrees = JustUtility::Repeat(
+		static_cast<float>(glfwGetTime()) * 60.0f,
+		0.0f, 360.0f);
+
+	model = glm::rotate(model, glm::radians(degrees), glm::vec3(1.0f, 0.0f, 0.0f));
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
+
+	GLint u_modelLocation = glGetUniformLocation(m_program, "model");
+	GLint u_viewLocation = glGetUniformLocation(m_program, "view");
+	GLint u_projectionLocation = glGetUniformLocation(m_program, "projection");
+
+	glUniformMatrix4fv(u_modelLocation, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(u_viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(u_projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
 Texture& Shader::GetTexture() {

@@ -36,5 +36,7 @@ TestRenderer::~TestRenderer() {
 
 void TestRenderer::Draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glDisable(GL_CULL_FACE);
 	m_triangleMesh.Draw();
+	glEnable(GL_CULL_FACE);
 }
