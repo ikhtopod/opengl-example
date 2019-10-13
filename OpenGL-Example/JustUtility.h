@@ -38,6 +38,8 @@ static void CopyVector(const std::vector<T>& from, std::vector<T>& to) {
 	std::copy(from.cbegin(), from.cend(), to.begin());
 }
 
+float Repeat(float value, float min_value, float max_value);
+
 } // namespace JustUtility
 
 #endif // !JUSTUTILITY_H
