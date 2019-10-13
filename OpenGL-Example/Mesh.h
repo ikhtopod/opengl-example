@@ -7,13 +7,15 @@
 #include "Shader.h"
 
 class Mesh : virtual public IRendering {
+	using VerticesType = glm::vec3;
+
 protected:
 	static const GLsizei DEFAULT_BUFFER_SIZE;
 
 protected:
 	GLenum m_mode = GL_TRIANGLES;
 
-	std::vector<GLfloat> m_vertices {};
+	std::vector<VerticesType> m_vertices {};
 	std::vector<GLuint> m_indices {};
 
 	GLuint vao {};
@@ -26,7 +28,7 @@ protected:
 	static void Unbind();
 
 public:
-	void SetVertices(const std::vector<GLfloat>& vertices);
+	void SetVertices(const std::vector<VerticesType>& vertices);
 	void SetIndices(const std::vector<GLuint>& indices);
 
 	Shader& GetShader();

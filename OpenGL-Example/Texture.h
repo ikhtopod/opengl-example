@@ -15,11 +15,13 @@ enum class TextureComponent : int {
 };
 
 class Texture final : public IRendering {
+	using CoordType = glm::vec2;
+
 private:
 	static const std::string DEFAULT_IMAGE_PATH;
 
 private:
-	std::vector<GLfloat> m_coords {};
+	std::vector<CoordType> m_coords {};
 
 	GLuint vbo {};
 	GLuint tex1 {};
@@ -28,7 +30,7 @@ private:
 	static void Unbind();
 
 public:
-	void SetCoords(const std::vector<GLfloat>& coords);
+	void SetCoords(const std::vector<CoordType>& coords);
 
 public: // IRendering
 	virtual void Init() override;

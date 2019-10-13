@@ -11,8 +11,8 @@ void Texture::Unbind() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture::SetCoords(const std::vector<GLfloat>& coords) {
-	JustUtility::CopyVector<GLfloat>(coords, m_coords);
+void Texture::SetCoords(const std::vector<CoordType>& coords) {
+	JustUtility::CopyVector<CoordType>(coords, m_coords);
 }
 
 /* IRendering */
@@ -22,7 +22,7 @@ void Texture::Init() {
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER,
-		static_cast<GLsizeiptr>(m_coords.size()) * sizeof(GLfloat),
+		static_cast<GLsizeiptr>(m_coords.size()) * sizeof(CoordType),
 		&m_coords[0],
 		GL_STATIC_DRAW);
 

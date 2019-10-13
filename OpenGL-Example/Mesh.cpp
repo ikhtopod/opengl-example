@@ -7,8 +7,8 @@ void Mesh::Unbind() {
 	glBindVertexArray(0);
 }
 
-void Mesh::SetVertices(const std::vector<GLfloat>& vertices) {
-	JustUtility::CopyVector<GLfloat>(vertices, m_vertices);
+void Mesh::SetVertices(const std::vector<VerticesType>& vertices) {
+	JustUtility::CopyVector<VerticesType>(vertices, m_vertices);
 }
 
 void Mesh::SetIndices(const std::vector<GLuint>& indices) {
@@ -30,8 +30,8 @@ void Mesh::Init() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER,
-		static_cast<GLsizeiptr>(m_vertices.size()) * sizeof(GLfloat),
-		&m_vertices[0], // or &(m_vertices)[0] for glm
+		static_cast<GLsizeiptr>(m_vertices.size()) * sizeof(VerticesType),
+		&m_vertices[0],
 		GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
