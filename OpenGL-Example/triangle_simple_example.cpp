@@ -83,12 +83,12 @@ void InitOpenGL() {
 
 #pragma region Rendering
 
-class Renderer final {
+class RenderTriangle final {
 private:
 	Mesh m_triangleMesh {};
 
 public:
-	Renderer() {
+	RenderTriangle() {
 		m_triangleMesh.SetVertices(
 			{
 				 0.5f,  0.5f, 0.0f,
@@ -108,7 +108,7 @@ public:
 		m_triangleMesh.Init();
 	}
 
-	~Renderer() {
+	~RenderTriangle() {
 		m_triangleMesh.Free();
 	}
 
@@ -154,7 +154,7 @@ int main() {
 
 	InitOpenGL();
 
-	for (Renderer renderer {}; !glfwWindowShouldClose(winContext); ) {
+	for (RenderTriangle renderer {}; !glfwWindowShouldClose(winContext); ) {
 		glfwSetWindowTitle(winContext, (g_title + " | time: " + std::to_string(glfwGetTime())).c_str());
 
 		ProcessInput(winContext);
