@@ -22,6 +22,12 @@
     <Filter Include="Исходные файлы\examples">
       <UniqueIdentifier>{1b54e814-023c-4c4a-9c22-65bf8f925c6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Renderer">
+      <UniqueIdentifier>{11b0ff02-26a3-498b-a1a1-243c1638ffa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Renderer">
+      <UniqueIdentifier>{dcb18c1d-17d9-4bb2-83ea-063c9f52ea6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -63,8 +69,11 @@
     <ClCompile Include="Application.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="TestRenderer.cpp">
+      <Filter>Исходные файлы\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseRenderer.cpp">
+      <Filter>Исходные файлы\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,8 +107,11 @@
     <ClInclude Include="Application.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="BaseRenderer.h">
+      <Filter>Файлы заголовков\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="TestRenderer.h">
+      <Filter>Файлы заголовков\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

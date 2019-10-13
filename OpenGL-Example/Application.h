@@ -4,7 +4,7 @@
 #define APPLICATION_H
 
 #include "IRendering.h"
-#include "Renderer.h"
+#include "TestRenderer.h"
 #include "Window.h"
 
 class Application final : public IRendering {

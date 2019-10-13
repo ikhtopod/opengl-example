@@ -169,7 +169,7 @@
       </DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="BaseRenderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -179,6 +179,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="TestRenderer.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="triangle_simple_example.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -193,9 +194,10 @@
     <ClInclude Include="IRendering.h" />
     <ClInclude Include="JustUtility.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="BaseRenderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TestRenderer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

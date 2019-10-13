@@ -32,12 +32,12 @@ void Application::InitOpenGL() const {
 }
 
 void Application::MainLoop() {
-	Renderer renderer {};
+	TestRenderer testRenderer {};
 
 	while (!glfwWindowShouldClose(m_window.GetContext())) {
 		m_window.Draw();
 		ProcessInput();
-		renderer.Draw();
+		testRenderer.Draw();
 	}
 }
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "Renderer.h"
+#include "TestRenderer.h"
 
-Renderer::Renderer() {
+TestRenderer::TestRenderer() {
 	m_triangleMesh.SetVertices(
 		{
 			 0.5f,  0.5f, 0.0f,
@@ -30,11 +30,11 @@ Renderer::Renderer() {
 	m_triangleMesh.Init();
 }
 
-Renderer::~Renderer() {
+TestRenderer::~TestRenderer() {
 	m_triangleMesh.Free();
 }
 
-void Renderer::Draw() {
+void TestRenderer::Draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_triangleMesh.Draw();
 }
